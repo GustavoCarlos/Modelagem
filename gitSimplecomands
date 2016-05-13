@@ -1,0 +1,21 @@
+//Inicia um repositorio local
+git init
+
+//liga repositorio local ao repositorio no github
+git remote add origin git@github.com:GustavoCarlos/Modelagem.git
+
+//adiciona arquivos que passaram no commit
+git add .
+git add teste.c
+
+//Commit dos arquivos selecionados e mensagem do que foi alterado
+git commit -m 'Fisrt commit'
+
+//Atualiza o local com o github
+git pull origin master
+
+//Atualiza o github com o local
+git pull origin master
+
+
+
