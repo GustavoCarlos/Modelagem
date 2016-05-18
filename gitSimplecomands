@@ -15,7 +15,7 @@ git commit -m 'Fisrt commit'
 git pull origin master
 
 //Atualiza o github com o local
-git pull origin master
+git push origin master
 
 
 

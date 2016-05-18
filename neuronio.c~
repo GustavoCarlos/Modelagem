@@ -1,14 +1,6 @@
 #include <stdio.h>
 #include <math.h>
 
-int heavSide(float v)
-{
-	if(v >= 0)
-		return 1;
-	else
-		retunr 0;
-}
-
 int main(int argc, const char * argv[])
 {
 
@@ -41,5 +33,9 @@ int main(int argc, const char * argv[])
 	}
 
 	fclose(neuronData);
+
+	
+	//(0.066 - 1.0648⁻⁵ + 2 - 0.0001 + 0.2) * 0.01 
+
 }
 
