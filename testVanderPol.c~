@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <math.h>
+
+int main(void)
+{
+	FILE *vanderPol;
+	vanderPol = fopen("testVanderPol.txt", "w");
+	float x, dx, y, dy, dt, u;
+	float j;
+
+	u = 5;
+	dt = 0.01;
+
+	x = 0;
+	y = 0;
+
+	for(j=0; j< 1; j += dt)
+	{
+		dx = u*(x - (1/3)*pow(x,3) - y)*dt;
+		dy = (1/u)*x*dt;
+
+		x += dx;
+		y += dy;
+		fprintf(vanderPol, "%f\n", x);
+		
+	}
+
+	fclose(vanderPol);
+
+	return 0;
+}
+

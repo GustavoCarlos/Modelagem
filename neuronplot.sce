@@ -2,7 +2,7 @@
 clear()
 clf
 
-M = fscanfMat("neuronData.txt")
+M = fscanfMat("neuronDataX.txt")
 
 X = M(:,1)
 Y = M(:,2)
@@ -16,7 +16,7 @@ Y = M(:,2)
 //ylabel("População","fontsize", 2,"color", "blue")
 
 //subplot(2,1,2)
-plot(X)
+plot(M)
 //plot([H1,H2, C1,C2])
 //title("Grafico de comportamento das populações","fontsize", 4, "color", "blue")
 //legend("Fitoplãncton", "Camarão", "Peixe", "Homem", "Urso")
