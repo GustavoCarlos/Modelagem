@@ -1,8 +1,19 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
+#include <time.h>
 
-#define NUM_NEUR	6
-#define T_MAX		1000
+
+#define NUM_NEUR	500
+#define T_MAX		20.0
+
+
+#define I_ativo 0.2
+#define I_inativo -0.02
+
+float w[NUM_NEUR][NUM_NEUR];
+
+
 
 int heaviSide(float v)
 {
@@ -12,18 +23,55 @@ int heaviSide(float v)
 		return 0;
 }
 
+void inicilizaVariaveis(float *x, float *y, float *I)
+{
+	int n, j;
+	//Inicializa variaveis
+	for(n = 0; n < NUM_NEUR; n++)
+	{
+		x[n] = (float)(-200 + (rand()%410))/100;
+		y[n] = (float)(rand()%410)/100;
+		
+		if(n > NUM_NEUR/3)
+			I[n] = I_ativo;
+		else
+			I[n] = I_inativo;
+		
+		for(j = 0; j < NUM_NEUR; j++)
+			w[n][j] = 0.0;
+	}
+}
+
+void inicializaRede()
+{
+	int a, b;
+	FILE *readRede;
+	readRede = fopen("proj3Files/graph_BA.txt", "r");
+
+	while(fscanf(readRede, "%d%d", &a, &b) != -1)//!feof(readRede))
+	{
+		w[a][b] = 0.1;
+		printf("Inicializando...");
+	}
+	
+	fclose(readRede);
+	
+
+}
+
+
 int main(int argc, const char * argv[])
 {
 
 	FILE *neuronData;
 	neuronData = fopen("neuronDataX.txt", "w");
 
-	float dy, dx, dt, I, p, epsilon, alpha, beta, theta, ro;
+	float dy, dx, dt, p, epsilon, alpha, beta, theta, ro;
 
-	float x[NUM_NEUR], y[NUM_NEUR], w[NUM_NEUR][NUM_NEUR], S[NUM_NEUR];
+	float x[NUM_NEUR], y[NUM_NEUR]/*, w[NUM_NEUR][NUM_NEUR]*/, S[NUM_NEUR], I[NUM_NEUR];
 	
 	//Parametros do modelo
-	I = -0.02;//I = -0.02;
+	//I = -0.02;//I = -0.02;
 	theta = 0.5;
 	alpha = 6.0;
 	epsilon = 0.02;
@@ -35,23 +83,13 @@ int main(int argc, const char * argv[])
 
 	float i;
 	int j, n;
+	
+	//x e y aleatorios x -2 a 2 e y de 0 a 4
 
-	//Inicializa variaveis
-	for(n = 0; n < NUM_NEUR; n++)
-	{
-		x[n] = -2;
-		y[n] = 0;
-		for(j = 0; j < NUM_NEUR; j++)
-			w[n][j] = 0;
-	}
-
-	//w[0][1] = 0.1;
-	//w[1][0] = 0.1;
-
-	//w[1][2] = 0.1;
-	//w[2][1] = 0.1;
-
-
+	inicilizaVariaveis(x, y, I);
+			
+	inicializaRede();
+	
 
 	for(i = 0; i < T_MAX; i += dt)
 	{
@@ -74,7 +112,7 @@ int main(int argc, const char * argv[])
 		for(n = 0; n < NUM_NEUR; n++)
 		{
 		
-			dx = (3*x[n] - pow(x[n],3) + 2 - y[n] + I + ro + S[n])*dt;
+			dx = (3*x[n] - pow(x[n],3) + 2 - y[n] + I[n] + ro + S[n])*dt;
 			dy = (epsilon*(alpha*(1 + tanh(x[n]/beta)) - y[n]))*dt;
 			x[n] += dx;
 			y[n] += dy;
